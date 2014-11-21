@@ -20,7 +20,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
- 
+
 ;(function(window, document, exportName) {
 	'use strict';
 
@@ -323,7 +323,7 @@
 		 */
 		setDebugMode: function (isDebugModeOn) {
 			showDebugOutput = isDebugModeOn;
-		},
+		}
 	};
 
 

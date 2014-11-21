@@ -20,11 +20,18 @@ var drumpants = new DrumPants();
 // this is where you listen for hits on the DrumPad
 drumpants.addListener('sensorUpdate', 
 
-	// sensorIdx (int) is the index of the DrumPad, 0 through 11.
-	// sensorValue (float) is the value of the sensor (how hard it was hit), between 0 (weakest hit) and 1 (hardest hit).
+	// sensorIdx (int) : the index of the DrumPad, 0 through 11.
+	// sensorValue (float) : the value of the sensor (how hard it was hit), 
+	//                     between 0 (weakest hit) and 1 (hardest hit).
 	function (sensorIdx, sensorValue) {
 		// your code here
 	}
 );
 ````
 That's it! Plug in your DrumPants and start playing! You will only receive events when the DrumPants app is running.
+
+
+Example
+---------------
+
+Try the example: http://drumpants.github.io/DrumPants-Javascript-SDK/example/
