@@ -36,11 +36,13 @@
 		// This is just for the example; has nothing to do with DrumPants.
 		// -----------------------
     	var
-    		// the following are for drawing on the canvas.
+    		// The following are for drawing on the canvas.
     		canvas = document.getElementById('display'),
     		ctx = canvas.getContext("2d"),
 
-    		// draws a circle in the canvas.
+    		textToShow = null,
+
+    		// Draws a circle in the canvas.
     		// x and y and size are between 0 and 1.
     		drawCircle = function (x, y, size) {
     			var radius = canvas.width / 12 * size,
@@ -51,22 +53,38 @@
 				ctx.lineWidth = 5;
 				ctx.strokeStyle = 'rgba(255,' + green + ',0,' + size + ')';
 				ctx.stroke();
-    		},
+    		}
 
-    		// animate the canvas for a nice fade-away effect
+    		// Shows text at the top of the canvas
+    		displayText = function (text) {
+    			textToShow = text;
+    		},
+    		hideText = function () {
+    			textToShow = null;
+    		}
+
+    		// Animate the canvas for a nice fade-away effect
     		drawFrame = function () {
     			ctx.globalCompositeOperation = 'source-over';
 
     			ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
     			ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    			if (textToShow) {
+    				ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+    				ctx.textAlign = 'center';
+    				ctx.textBaseline = "top";
+    				ctx.font = "28px serif";
+    				ctx.fillText(textToShow, canvas.width / 2, 10);
+    			}
     		};
 
-    	// make canvas fill the whole screen
+    	// Make canvas fill the whole screen
     	canvas.width = window.innerWidth;
     	canvas.height = window.innerHeight;
 
 
-    	// start animating canvas
+    	// Start animating canvas
     	(function animloop(){
 		  window.requestAnimationFrame(animloop);
 		  drawFrame();
@@ -81,20 +99,37 @@
 		// -----------------------
     	var drumpants = new DrumPants();
 
-    	// print debugging statements to the console.
+    	// Print debugging statements to the console.
     	drumpants.setDebugMode(true);
 
-    	// this is where you listen for hits on the DrumPad
+    	// This is where you listen for hits on the DrumPad
     	drumpants.addListener('sensorUpdate', 
 
     		// sensorIdx is the index of the DrumPad, 0 through 11.
     		// sensorValue is the value of the sensor (how hard it was hit), between 0 (weakest hit) and 1 (hardest hit).
     		function (sensorIdx, sensorValue) {
-    			// draw a circle on the canvas where:
+    			
+    			// Draw a circle on the canvas where:
     			// the horizontal position marks which sensor was hit,
     			// the vertical position is randomized,
     			// and the size is based on how hard it was hit.
     			drawCircle(sensorIdx / 12, Math.random(), sensorValue);
+    		}
+    	);
+
+    	// Respond to when a DrumPants device is connected to the computer.
+    	// This is a good way to give UI feedback to the user if they need to connect their DrumPants.
+    	drumpants.addListener('deviceConnected', 
+
+    		// isConnected is true if the device is connected, false if it has been disconnected.
+    		function (isConnected) {
+
+    			if (isConnected) {
+    				hideText();
+    			}
+    			else {
+    				displayText('Please plug your DrumPants into the computer');
+    			}
     		}
     	);
 
