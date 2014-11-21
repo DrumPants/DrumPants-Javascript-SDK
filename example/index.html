@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+		<title>DrumPants SDK Example</title>
+
+		<style type="text/css">
+		
+			body {
+				margin: 0;
+				padding: 0;
+				background: black;
+				overflow:hidden;
+			}
+
+			#display {
+				background: black;
+			}
+
+		</style>
+    </head>
+    <body>
+		<canvas id='display' width='600' height='600'>
+    </body>
+
+	<!-- Include the DrumPants SDK -->
+	<script type='text/javascript' src='../src/drumpants-sdk.js'></script>
+    
+	<!-- basic example code -->
+    <script type='text/javascript'>
+
+
+		// -----------------------
+		// EXAMPLE DRAWING FUNCTIONS
+		// 
+		// This is just for the example; has nothing to do with DrumPants.
+		// -----------------------
+    	var
+    		// the following are for drawing on the canvas.
+    		canvas = document.getElementById('display'),
+    		ctx = canvas.getContext("2d"),
+
+    		// draws a circle in the canvas.
+    		// x and y and size are between 0 and 1.
+    		drawCircle = function (x, y, size) {
+    			var radius = canvas.width / 12 * size,
+    				green = Math.min(Math.floor( (x * 2.0 * 255) ), 255);
+
+    			ctx.beginPath();
+				ctx.arc(x * canvas.width + radius, y * canvas.height, radius, 0, 2 * Math.PI, false);
+				ctx.lineWidth = 5;
+				ctx.strokeStyle = 'rgba(255,' + green + ',0,' + size + ')';
+				ctx.stroke();
+    		},
+
+    		// animate the canvas for a nice fade-away effect
+    		drawFrame = function () {
+    			ctx.globalCompositeOperation = 'source-over';
+
+    			ctx.fillStyle = 'rgba(0, 0, 0, 0.04)';
+    			ctx.fillRect(0, 0, canvas.width, canvas.height);
+    		};
+
+    	// make canvas fill the whole screen
+    	canvas.width = window.innerWidth;
+    	canvas.height = window.innerHeight;
+
+
+    	// start animating canvas
+    	(function animloop(){
+		  window.requestAnimationFrame(animloop);
+		  drawFrame();
+		})();
+
+
+
+		// -----------------------
+		// DRUMPANTS SDK
+		// 
+		// This is the part you would use in your code.
+		// -----------------------
+    	var drumpants = new DrumPants();
+
+    	// print debugging statements to the console.
+    	drumpants.setDebugMode(true);
+
+    	// this is where you listen for hits on the DrumPad
+    	drumpants.addListener('sensorUpdate', 
+
+    		// sensorIdx is the index of the DrumPad, 0 through 11.
+    		// sensorValue is the value of the sensor (how hard it was hit), between 0 (weakest hit) and 1 (hardest hit).
+    		function (sensorIdx, sensorValue) {
+    			// draw a circle on the canvas where:
+    			// the horizontal position marks which sensor was hit,
+    			// the vertical position is randomized,
+    			// and the size is based on how hard it was hit.
+    			drawCircle(sensorIdx / 12, Math.random(), sensorValue);
+    		}
+    	);
+
+
+    </script>
+</html>

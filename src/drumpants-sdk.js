@@ -44,9 +44,6 @@
 
 
 	DrumPantsClient.prototype = {
-		setDebugMode: function (isDebugModeOn) {
-			showDebugOutput = isDebugModeOn;
-		},
 
 		// must be bound to the Controller object
 		startAutoconnect: function () {
@@ -289,10 +286,15 @@
 
 			if (event == 'sensorUpdate') {
 				listenerObj.update = function (update) {
-						var sensorValues = update.sensorValues;
+						var sensorValues = update.sensorValues,
+							value;
 
 						for (var i = 0; i < sensorValues.length; i++) {
-							listener(i, sensorValues[i]);
+							value = sensorValues[i];
+							
+							if (value >= 0) { // don't send null values, meaning the sensor has not been hit.
+								listener(i, value);
+							}
 						}
 					};
 			}
@@ -301,7 +303,15 @@
 			}
 
 			this.client.addListener(listenerObj);
-		}
+		},
+
+		/**
+		 * Enables or disables debug printing.
+		 * @param {Boolean} isDebugModeOn If true, print debug statements to the console.
+		 */
+		setDebugMode: function (isDebugModeOn) {
+			showDebugOutput = isDebugModeOn;
+		},
 	};
 
 
