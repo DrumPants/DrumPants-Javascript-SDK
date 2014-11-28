@@ -159,12 +159,6 @@
 							controller.trigger("server:loadPreset", json);
 						}
 						if (json.devices) {
-							// TODO: fix this
-							// temporarily convert string array response to list of objects that Backbone likes for models
-							json.devices = _.map(json.devices, function (el) {
-								return { name: el };
-							});
-
 							controller.trigger("server:devices", json);	
 						}
 						if (typeof(json.isConnected) != "undefined") {
@@ -232,8 +226,8 @@
 		 *                          listener.update : called when sensor data is updated, with array of all current sensor values.
 		 *                          listener.devices: called when a new DrumPants device is available.
 		 *                          listener.deviceConnected: called when DrumPants are connected/disconnected to the computer.
-		 *                          listener.connected: called when WebSockets makes a successfull connection to DrumPants driver.
-		 *                          listener.disconnected: called when WebSockets is discconected from DrumPants driver.
+		 *                          listener.connected: called when WebSockets makes a successful connection to DrumPants driver.
+		 *                          listener.disconnected: called when WebSockets is disconnected from DrumPants driver.
 		 */
 		addListener : function(listener) {
 			this.eventListeners.push(listener);
@@ -281,8 +275,8 @@
 		 *                          "sensorUpdate" : called when sensor data is updated, with sensor ID and sensor value.
 		 *                          "devices": called when a new DrumPants device is available.
 		 *                          "deviceConnected": called when DrumPants are connected/disconnected to the computer.
-		 *                          "connected": called when WebSockets makes a successfull connection to DrumPants driver.
-		 *                          "disconnected": called when WebSockets is discconected from DrumPants driver.
+		 *                          "connected": called when WebSockets makes a successful connection to DrumPants driver.
+		 *                          "disconnected": called when WebSockets is disconnected from DrumPants driver.
 		 *                          
 		 * @param {Function} listener Callback function to call when an event is triggered. Arguments:
 		 *                          "sensorUpdate" : function({int} sensorId, {float} sensorValue)
