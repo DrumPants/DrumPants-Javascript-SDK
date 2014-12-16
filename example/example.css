@@ -1,0 +1,44 @@
+
+body {
+	margin: 0;
+	padding: 0;
+	background: black;
+	overflow:hidden;
+}
+
+.button {
+	display: inline-block;
+	padding: 5px 15px;
+	margin: 5px;
+	color: #fafafa;
+	cursor:pointer;
+
+	background: #00a79d; /* Old browsers */
+	background: -moz-linear-gradient(top, #00a79d 0%, #008979 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#00a79d), color-stop(100%,#008979)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #00a79d 0%,#008979 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #00a79d 0%,#008979 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #00a79d 0%,#008979 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #00a79d 0%,#008979 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00a79d', endColorstr='#008979',GradientType=0 ); /* IE6-9 */
+}
+
+a.button,
+a.button:link,
+a.button:visited,
+a.button:hover 
+{
+	color: #fafafa;
+	text-decoration: none;
+}
+
+#display {
+	background: black;
+}
+
+#startDrumPantsApp {
+	position: fixed;
+	right: 20px;
+	bottom: 30px;
+	color: white;
+}	
