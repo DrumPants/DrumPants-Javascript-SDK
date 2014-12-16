@@ -128,7 +128,7 @@
 
 					debug.log("[DrumPants WebSocket opened]");
 
-					controller.trigger("server:connected");
+					controller.trigger("server:serverConnected", true);
 				};
 				sensorizerServer.onmessage = function (e) {
 					var json = null;
@@ -179,7 +179,7 @@
 				};
 				sensorizerServer.onclose = function () {
 					debug.log("[DrumPants WebSocket closed]");
-					controller.trigger("server:disconnected");
+					controller.trigger("server:serverConnected", false);
 
 					if (this.enableAutoconnect) {
 						controller.startAutoconnect();
@@ -226,8 +226,7 @@
 		 *                          listener.update : called when sensor data is updated, with array of all current sensor values.
 		 *                          listener.devices: called when a new DrumPants device is available.
 		 *                          listener.deviceConnected: called when DrumPants are connected/disconnected to the computer.
-		 *                          listener.connected: called when WebSockets makes a successful connection to DrumPants driver.
-		 *                          listener.disconnected: called when WebSockets is disconnected from DrumPants driver.
+		 *                          listener.serverConnected: called when WebSockets is connected/disconnected to DrumPants driver app.
 		 */
 		addListener : function(listener) {
 			this.eventListeners.push(listener);
@@ -275,15 +274,13 @@
 		 *                          "sensorUpdate" : called when sensor data is updated, with sensor ID and sensor value.
 		 *                          "devices": called when a new DrumPants device is available.
 		 *                          "deviceConnected": called when DrumPants are connected/disconnected to the computer.
-		 *                          "connected": called when WebSockets makes a successful connection to DrumPants driver.
-		 *                          "disconnected": called when WebSockets is disconnected from DrumPants driver.
+		 *                          "serverConnected": called when WebSockets is connected/disconnected to DrumPants driver app.
 		 *                          
 		 * @param {Function} listener Callback function to call when an event is triggered. Arguments:
 		 *                          "sensorUpdate" : function({int} sensorId, {float} sensorValue)
 		 *                          "devices": function({Array<String>} availableDevices)
 		 *                          "deviceConnected": function({boolean} isDeviceConnected)
-		 *                          "connected": function()
-		 *                          "disconnected": function()
+		 *                          "serverConnected": function({boolean} isServerConnected)
 		 */
 		addListener: function (event, listener) {
 			var listenerObj = {};
