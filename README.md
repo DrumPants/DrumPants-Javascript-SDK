@@ -49,13 +49,13 @@ This SDK does most the work for you, but if you want to use another language, th
 Connecting
 ---------------
 
-Scheme/Address/Port: "ws://localhost:8887"
+Scheme/Address/Port: `ws://localhost:8887`
 
-Please close the connection when you are not using it. For instance, in the onPause() method on Android or viewWillDisappear() message in iOS.
+Please close the connection when you are not using it. For instance, in the `onPause()` method on Android or `viewWillDisappear()` message in iOS.
 
 Updates will come in every 80ms, so please keep your processing to a minimum.
 
-The DrumPants app must be running in the background to receive updates. To launch it, run the "drumpants://start" URL from the OS.
+The DrumPants app must be running in the background to receive updates. To launch it, run the `drumpants://start` URL from the OS.
 
 
 Example JSON Response
